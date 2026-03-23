@@ -22,7 +22,7 @@ app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1, x_host=1, x_prefix=1)
 
 # Secure CORS for frontend
 frontend_url = os.getenv('FRONTEND_URL', 'http://localhost:5174')
-CORS(app, resources={r"/api/*": {"origins": frontend_url}})
+CORS(app, origins=["https://hijack-detector-frontend.vercel.app"])
 
 # JWT Configuration
 app.config['JWT_SECRET_KEY'] = os.getenv('JWT_SECRET', 'fallback-secret-key-change-it')
