@@ -21,16 +21,11 @@ app = Flask(__name__)
 app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1, x_host=1, x_prefix=1)
 
 # Secure CORS for frontend
-app.config['CORS_HEADERS'] = 'Content-Type'
-
-CORS(app, resources={
-    r"/api/*": {
-        "origins": "*"
-    }
-}, supports_credentials=True)
+frontend_url = os.getenv('FRONTEND_URL', 'http://localhost:5174')
+CORS(app, resources={r"/api/*": {"origins": frontend_url}})
 
 # JWT Configuration
-app.config['JWT_SECRET_KEY'] = os.getenv('JWT_SECRET')
+app.config['JWT_SECRET_KEY'] = os.getenv('JWT_SECRET', 'fallback-secret-key-change-it')
 jwt = JWTManager(app)
 
 # Rate Limiter
