@@ -8,7 +8,7 @@ MONGO_URI = os.getenv("MONGO_URI")
 
 try:
     client = MongoClient(MONGO_URI, serverSelectionTimeoutMS=5000)
-    db = client.get_database() # Uses the DB from the URI or default if none given
+    db = client["social_hijack"] # Uses the DB from the URI or default if none given
     # Define collections
     users_collection = db["users"]
     login_logs_collection = db["login_logs"]
